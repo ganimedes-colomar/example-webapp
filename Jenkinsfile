@@ -28,6 +28,8 @@ pipeline {
                     builderImage.push("${env.GIT_BRANCH}")
                     builderImage.inside('-v $WORKSPACE:/output -u root') {
                         sh """
+                           docker build -t ${ACCOUNT_REGISTRY_PREFIX}/example_webapp_builder:${GIT_COMMIT_HASH} -f ./Dockerfile.builder .
+                           docker push ${ACCOUNT_REGISTRY_PREFIX}/example_webapp_builder:${GIT_COMMIT_HASH}
                            cd /output
                            lein uberjar
                         """
