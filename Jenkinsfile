@@ -28,8 +28,6 @@ pipeline {
                     builderImage.push("${env.GIT_BRANCH}")
                     builderImage.inside('-v $WORKSPACE:/output -u root') {
                         sh """
-                           docker build -t ${ACCOUNT_REGISTRY_PREFIX}/example_webapp_builder:${GIT_COMMIT_HASH} -f ./Dockerfile.builder .
-                           docker push ${ACCOUNT_REGISTRY_PREFIX}/example_webapp_builder:${GIT_COMMIT_HASH}
                            cd /output
                            lein uberjar
                         """
@@ -73,7 +71,7 @@ pipeline {
                 script {
                     productionImage.push("deploy")
                     sh """
-                       aws ec2 reboot-instances --region ap-south-1 --instance-ids i-0ee7f8b8673cc610e
+                       aws ec2 reboot-instances --region us-east-1 --instance-ids i-0e438e2bf64427c9d
                     """
                 }
             }
