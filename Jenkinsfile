@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Starting to build the project builder docker image'
                 script {
-                    builderImage = docker.build("${ACCOUNT_REGISTRY_PREFIX}/example_webapp_builder:${GIT_COMMIT_HASH}", "-f ./Dockerfile.builder .")
+                    builderImage = docker.build("${ACCOUNT_REGISTRY_PREFIX}/example_webapp_builder:9b58a263f9c7359b24de168d0660d4382ddebd37", "-f ./Dockerfile.builder .")
                     builderImage.push()
                     builderImage.push("${env.GIT_BRANCH}")
                     builderImage.inside('-v $WORKSPACE:/output -u root') {
@@ -54,7 +54,7 @@ pipeline {
             steps {
                 echo 'Starting to build docker image'
                 script {
-                    productionImage = docker.build("${ACCOUNT_REGISTRY_PREFIX}/example_webapp:${GIT_COMMIT_HASH}")
+                    productionImage = docker.build("${ACCOUNT_REGISTRY_PREFIX}/example_webapp:9b58a263f9c7359b24de168d0660d4382ddebd37")
                     productionImage.push()
                     productionImage.push("${env.GIT_BRANCH}")
                 }
